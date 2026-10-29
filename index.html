@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A practical guide to making your first open-source contribution to this project.">
+    <title>Contribute | Open Source Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #17231f;
+            --muted: #62706a;
+            --paper: #f5f6ef;
+            --white: #fffefa;
+            --green: #c9ef68;
+            --line: #dce2d7;
+            --orange: #e9825c;
+            --mono: "DM Mono", monospace;
+            --sans: "DM Sans", sans-serif;
+            --display: "Space Grotesk", sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: var(--sans);
+            line-height: 1.55;
+        }
+        a { color: inherit; }
+        .shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+        .topbar {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--line);
+        }
+        .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 700; }
+        .brand-mark {
+            width: 31px;
+            height: 31px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: var(--ink);
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 15px;
+        }
+        .topbar nav { display: flex; gap: 29px; align-items: center; }
+        .topbar nav a { color: var(--muted); font-size: 13px; font-weight: 600; text-decoration: none; }
+        .topbar nav a:hover { color: var(--ink); }
+        .nav-cta { padding: 10px 15px; border-radius: 5px; background: var(--green); color: var(--ink) !important; }
+
+        .hero {
+            min-height: 480px;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 54px;
+            padding: 58px 0 62px;
+        }
+        .eyebrow, .section-kicker { font: 500 11px var(--mono); letter-spacing: 0; text-transform: uppercase; }
+        .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: #53625a; }
+        .eyebrow::before { content: ""; width: 19px; height: 2px; background: var(--orange); }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 {
+            max-width: 570px;
+            margin: 19px 0 16px;
+            font: 600 clamp(43px, 5vw, 65px)/1.02 var(--display);
+            letter-spacing: 0;
+        }
+        h1 span { color: #67843a; }
+        .hero-copy > p { max-width: 490px; margin-bottom: 25px; color: var(--muted); font-size: 16px; }
+        .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 17px; }
+        .button {
+            min-height: 45px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 17px;
+            border: 0;
+            border-radius: 5px;
+            background: var(--ink);
+            color: white;
+            font: 600 13px var(--sans);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .button:hover { background: #30433b; }
+        .text-link { font-size: 13px; font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+        .hero-art {
+            min-height: 330px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 22px;
+            background: #dce9c7 url("https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=85") center 43%/cover;
+            border-radius: 7px;
+        }
+        .hero-art::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 38%, rgba(16, 29, 23, .72)); }
+        .art-note { position: relative; width: 100%; display: flex; justify-content: space-between; align-items: end; color: white; }
+        .art-note strong { font: 600 18px var(--display); }
+        .art-note span { font: 11px var(--mono); }
+        .hero-index { position: absolute; top: 17px; right: 17px; padding: 8px 10px; background: var(--green); font: 11px var(--mono); }
+
+        .quick-path { background: var(--ink); color: white; }
+        .quick-inner { min-height: 128px; display: grid; grid-template-columns: 1.05fr 2fr; align-items: center; gap: 44px; padding: 26px 0; }
+        .quick-inner h2 { margin: 0; font: 600 19px var(--display); }
+        .quick-inner p { margin: 4px 0 0; color: #b7c3bc; font-size: 12px; }
+        .quick-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .quick-step { display: flex; align-items: center; gap: 9px; color: #e2e8e1; font-size: 11px; }
+        .quick-step b { width: 25px; height: 25px; display: grid; place-items: center; flex: 0 0 25px; border: 1px solid #53635a; border-radius: 50%; color: var(--green); font: 11px var(--mono); }
+
+        .section { padding: 82px 0; }
+        .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 25px; margin-bottom: 31px; }
+        .section-kicker { display: block; margin-bottom: 10px; color: #738150; }
+        h2 { margin-bottom: 0; font: 600 34px/1.1 var(--display); }
+        .section-heading > p { max-width: 330px; margin: 0; color: var(--muted); font-size: 13px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .step-card { min-height: 190px; padding: 21px; border: 1px solid var(--line); background: var(--white); }
+        .step-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .step-number { color: #82916f; font: 12px var(--mono); }
+        .step-icon { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; background: #edf3df; color: #526839; font: 14px var(--mono); }
+        .step-card h3 { margin-bottom: 7px; font: 600 17px var(--display); }
+        .step-card p { margin: 0; color: var(--muted); font-size: 12px; }
+
+        .workflow { padding: 0 0 82px; }
+        .workflow-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 68px; align-items: start; }
+        .workflow-layout > *, .commands { min-width: 0; }
+        .workflow-intro { position: sticky; top: 24px; }
+        .workflow-intro h2 { max-width: 340px; margin-bottom: 13px; }
+        .workflow-intro p { max-width: 360px; color: var(--muted); font-size: 13px; }
+        .workflow-note { display: inline-block; margin-top: 10px; padding: 7px 10px; background: #e6edd5; font: 11px var(--mono); }
+        .commands { display: grid; grid-template-columns: minmax(0, 1fr); gap: 17px; }
+        .command-group { padding-bottom: 17px; border-bottom: 1px solid var(--line); }
+        .command-title { display: flex; justify-content: space-between; gap: 14px; align-items: baseline; margin-bottom: 8px; }
+        .command-title strong { font: 600 14px var(--display); }
+        .command-title span { color: var(--muted); font: 10px var(--mono); }
+        .code-line { min-height: 47px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 4px; background: #202e28; color: #e5eddf; }
+        .code-line code { min-width: 0; overflow-x: auto; font: 11px var(--mono); white-space: nowrap; }
+        .copy-button { flex: 0 0 auto; padding: 5px 8px; border: 1px solid #607066; border-radius: 3px; background: transparent; color: white; font: 10px var(--mono); cursor: pointer; }
+        .copy-button:hover { border-color: var(--green); color: var(--green); }
+
+        .pr-band { padding: 53px 0; background: #e7eddd; }
+        .pr-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 55px; align-items: center; }
+        .pr-layout h2 { max-width: 370px; margin-bottom: 12px; }
+        .pr-layout p { max-width: 400px; margin-bottom: 0; color: var(--muted); font-size: 13px; }
+        .pr-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+        .pr-item { display: flex; gap: 9px; align-items: start; font-size: 12px; }
+        .check { color: #587831; font-weight: 700; }
+
+        footer { padding: 27px 0; }
+        .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 11px; }
+        .footer-inner p { margin: 0; }
+        .footer-inner a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
+        .reveal { animation: rise .65s both; }
+        @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 760px) {
+            .shell { width: min(100% - 36px, 560px); }
+            .topbar { height: 66px; }
+            .topbar nav { gap: 15px; }
+            .topbar nav a:not(.nav-cta) { display: none; }
+            .hero { grid-template-columns: 1fr; gap: 29px; padding: 48px 0; }
+            .hero-art { min-height: 260px; }
+            .quick-inner { grid-template-columns: 1fr; gap: 19px; }
+            .quick-steps { grid-template-columns: 1fr 1fr; row-gap: 13px; }
+            .section { padding: 62px 0; }
+            .section-heading { align-items: start; flex-direction: column; }
+            .steps-grid { grid-template-columns: 1fr 1fr; }
+            .workflow { padding-bottom: 62px; }
+            .workflow-layout, .pr-layout { grid-template-columns: 1fr; gap: 27px; }
+            .workflow-intro { position: static; }
+        }
+        @media (max-width: 480px) {
+            .steps-grid { grid-template-columns: 1fr; }
+            .step-card { min-height: 160px; }
+            .pr-list { grid-template-columns: 1fr; }
+            .footer-inner { align-items: start; flex-direction: column; }
+            h2 { font-size: 30px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+        }
+    </style>
+</head>
+<body>
+    <header class="shell topbar">
+        <a class="brand" href="#top" aria-label="Open Source Guide home">
+            <span class="brand-mark">&lt;/&gt;</span>
+            <span>Open Source Guide</span>
+        </a>
+        <nav aria-label="Main navigation">
+            <a href="#steps">The process</a>
+            <a href="#workflow">Git commands</a>
+            <a class="nav-cta" href="#pull-request">Make a contribution <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="shell hero">
+            <div class="hero-copy reveal">
+                <span class="eyebrow">A small guide to a big idea</span>
+                <h1>Good projects grow when <span>everyone</span> can help.</h1>
+                <p>New to open source? Start here. Find a useful change, work on it in your own branch, and share it with the project through a pull request.</p>
+                <div class="hero-actions">
+                    <a class="button" href="#steps">See how it works <span aria-hidden="true">↓</span></a>
+                    <a class="text-link" href="#workflow">I know Git already</a>
+                </div>
+            </div>
+            <div class="hero-art" role="img" aria-label="People collaborating around a table">
+                <span class="hero-index">COMMUNITY / 001</span>
+                <div class="art-note">
+                    <strong>Build in the open.</strong>
+                    <span>ONE PR AT A TIME</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-path" aria-label="Contribution overview">
+            <div class="shell quick-inner">
+                <div>
+                    <h2>Your first contribution, in four moves</h2>
+                    <p>Small, clear changes make a great place to start.</p>
+                </div>
+                <div class="quick-steps">
+                    <div class="quick-step"><b>01</b><span>Choose an issue</span></div>
+                    <div class="quick-step"><b>02</b><span>Make a branch</span></div>
+                    <div class="quick-step"><b>03</b><span>Make your change</span></div>
+                    <div class="quick-step"><b>04</b><span>Open a pull request</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="shell section" id="steps">
+            <div class="section-heading">
+                <div>
+                    <span class="section-kicker">01 / The process</span>
+                    <h2>Start small. Make it useful.</h2>
+                </div>
+                <p>You don't need to be an expert or write code to contribute. Good documentation, bug reports, and thoughtful feedback all count.</p>
+            </div>
+            <div class="steps-grid">
+                <article class="step-card">
+                    <div class="step-top"><span class="step-number">STEP 01</span><span class="step-icon" aria-hidden="true">⌕</span></div>
+                    <h3>Find a place to help</h3>
+                    <p>Look through the project's issues for a bug, improvement, or a task marked “good first issue.” Not sure? Ask before starting.</p>
+                </article>
+                <article class="step-card">
+                    <div class="step-top"><span class="step-number">STEP 02</span><span class="step-icon" aria-hidden="true">⑂</span></div>
+                    <h3>Set up your copy</h3>
+                    <p>Fork the repository to your GitHub account, clone your fork, and create a branch for one focused change.</p>
+                </article>
+                <article class="step-card">
+                    <div class="step-top"><span class="step-number">STEP 03</span><span class="step-icon" aria-hidden="true">✳</span></div>
+                    <h3>Build and check</h3>
+                    <p>Make the change, run the relevant checks, and keep your commit message short and specific.</p>
+                </article>
+                <article class="step-card">
+                    <div class="step-top"><span class="step-number">STEP 04</span><span class="step-icon" aria-hidden="true">↗</span></div>
+                    <h3>Share a pull request</h3>
+                    <p>Push your branch and open a PR against the project's main branch. Explain what changed and why.</p>
+                </article>
+                <article class="step-card">
+                    <div class="step-top"><span class="step-number">STEP 05</span><span class="step-icon" aria-hidden="true">↺</span></div>
+                    <h3>Respond to feedback</h3>
+                    <p>Reviewers may ask questions or suggest edits. Talk it through, make updates on the same branch, and push again.</p>
+                </article>
+                <article class="step-card">
+                    <div class="step-top"><span class="step-number">STEP 06</span><span class="step-icon" aria-hidden="true">✓</span></div>
+                    <h3>Celebrate the merge</h3>
+                    <p>Once approved and merged, your contribution is part of the project. Thanks for making it better.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="shell workflow" id="workflow">
+            <div class="workflow-layout">
+                <div class="workflow-intro">
+                    <span class="section-kicker">02 / A simple Git workflow</span>
+                    <h2>From fork to pull request.</h2>
+                    <p>Replace <code>YOUR-USERNAME</code> and <code>REPO</code> with your fork's details. Run these commands from your terminal.</p>
+                    <span class="workflow-note">One branch = one focused change</span>
+                </div>
+                <div class="commands">
+                    <div class="command-group">
+                        <div class="command-title"><strong>Clone your fork</strong><span>01 — SET UP</span></div>
+                        <div class="code-line"><code>git clone https://github.com/YOUR-USERNAME/REPO.git</code><button class="copy-button" type="button" aria-label="Copy clone command">Copy</button></div>
+                    </div>
+                    <div class="command-group">
+                        <div class="command-title"><strong>Create a branch</strong><span>02 — ISOLATE</span></div>
+                        <div class="code-line"><code>git switch -c fix/describe-your-change</code><button class="copy-button" type="button" aria-label="Copy branch command">Copy</button></div>
+                    </div>
+                    <div class="command-group">
+                        <div class="command-title"><strong>Save your work</strong><span>03 — COMMIT</span></div>
+                        <div class="code-line"><code>git add . && git commit -m "Describe your change"</code><button class="copy-button" type="button" aria-label="Copy commit command">Copy</button></div>
+                    </div>
+                    <div class="command-group">
+                        <div class="command-title"><strong>Push your branch</strong><span>04 — SHARE</span></div>
+                        <div class="code-line"><code>git push -u origin fix/describe-your-change</code><button class="copy-button" type="button" aria-label="Copy push command">Copy</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pr-band" id="pull-request">
+            <div class="shell pr-layout">
+                <div>
+                    <span class="section-kicker">03 / Before you submit</span>
+                    <h2>A good PR is easy to review.</h2>
+                    <p>Keep the change focused, describe the outcome, and give reviewers enough context to understand your thinking.</p>
+                </div>
+                <div class="pr-list">
+                    <div class="pr-item"><span class="check">✓</span><span>Explain the problem your change solves</span></div>
+                    <div class="pr-item"><span class="check">✓</span><span>Link the related issue, if there is one</span></div>
+                    <div class="pr-item"><span class="check">✓</span><span>Run relevant tests or checks</span></div>
+                    <div class="pr-item"><span class="check">✓</span><span>Add screenshots for visible UI changes</span></div>
+                    <div class="pr-item"><span class="check">✓</span><span>Keep unrelated changes out of the PR</span></div>
+                    <div class="pr-item"><span class="check">✓</span><span>Be kind and open to discussion</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="shell">
+        <div class="footer-inner">
+            <p>Open source is built by people, together.</p>
+            <p>Be respectful. See <a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct/">Contributor Covenant</a> for a community code of conduct.</p>
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.copy-button').forEach((button) => {
+            button.addEventListener('click', async () => {
+                const command = button.previousElementSibling.textContent;
+                try {
+                    await navigator.clipboard.writeText(command);
+                    button.textContent = 'Copied';
+                    window.setTimeout(() => { button.textContent = 'Copy'; }, 1400);
+                } catch {
+                    button.textContent = 'Select command';
+                    window.setTimeout(() => { button.textContent = 'Copy'; }, 1400);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
